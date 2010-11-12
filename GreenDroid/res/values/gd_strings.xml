@@ -23,6 +23,7 @@
     <string name="gd_search">Search</string>
     <string name="gd_talk">Talk</string>
     <string name="gd_compose">Compose</string>
+    <string name="gd_download">Download</string>
     <string name="gd_export">Export</string>
     <string name="gd_share">Share</string>
     <string name="gd_refresh">Refresh</string>

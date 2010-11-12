@@ -46,8 +46,9 @@ public abstract class ActionBarItem {
         Add, // A plus sign
         Star, // A star
         SortBySize, // Some bars
-        LocateMyself
-        // A surrounded dot
+        LocateMyself,        // A surrounded dot
+        Download
+
     }
 
     // Why, the hell, are those value protected to View ??? The simplest way to
@@ -137,7 +138,7 @@ public abstract class ActionBarItem {
     protected void onItemClicked() {
     }
 
-    static ActionBarItem createWithType(ActionBar actionBar, ActionBarItem.Type type) {
+    public static ActionBarItem createWithType(ActionBar actionBar, ActionBarItem.Type type) {
 
         int normalDrawableId;
         int altDrawableId;
@@ -234,6 +235,12 @@ public abstract class ActionBarItem {
                 normalDrawableId = R.drawable.gd_action_bar_locate_myself_normal;
                 altDrawableId = R.drawable.gd_action_bar_locate_myself_alt;
                 descriptionId = R.string.gd_locate_myself;
+                break;
+                
+            case Download:
+                normalDrawableId = R.drawable.gd_action_bar_download_normal;
+                altDrawableId = R.drawable.gd_action_bar_download_alt;
+                descriptionId = R.string.gd_download;
                 break;
 
             default:

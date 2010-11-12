@@ -62,6 +62,11 @@ public class SubtitleItem extends TextItem {
         this.subtitle = subtitle;
     }
 
+    public SubtitleItem(String text, String subtitle, boolean enabled) {
+        this(text, subtitle);
+        this.enabled = enabled;
+    }
+    
     @Override
     public ItemView newView(Context context, ViewGroup parent) {
         return createCellFromXml(context, R.layout.gd_subtitle_item_view, parent);
