@@ -58,6 +58,8 @@
         <item name="gdSubtitleItemViewStyleText">@style/GreenDroid.SubtitleItemView.Text</item>
         <item name="gdSubtitleItemViewStyleSubtitle">@style/GreenDroid.SubtitleItemView.Subtitle</item>
         
+        <item name="gdButtonItemViewStyle">@style/GreenDroid.ButtonItemView</item>
+        
         <item name="gdSubtextItemViewStyle">@style/GreenDroid.SubtextItemView</item>
         <item name="gdSubtextItemViewStyleText">@style/GreenDroid.SubtextItemView.Text</item>
         <item name="gdSubtextItemViewStyleSubtext">@style/GreenDroid.SubtextItemView.Subtext</item>

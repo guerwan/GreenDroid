@@ -15,15 +15,12 @@
  */
 package greendroid.app;
 
-import com.cyrilmottier.android.greendroid.R;
-
 import greendroid.util.Config;
 import greendroid.widget.ActionBar;
-import greendroid.widget.ActionBarHost;
-import greendroid.widget.ActionBarItem;
 import greendroid.widget.ActionBar.OnActionBarListener;
 import greendroid.widget.ActionBar.Type;
-import android.app.Activity;
+import greendroid.widget.ActionBarHost;
+import greendroid.widget.ActionBarItem;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -33,6 +30,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+
+import com.cyrilmottier.android.greendroid.R;
+import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
 
 /**
  * <p>
@@ -88,7 +88,7 @@ import android.widget.FrameLayout;
  * @see {@link GDActivity#setActionBarContentView(View, LayoutParams)}
  * @author Cyril Mottier
  */
-public class GDActivity extends Activity implements ActionBarActivity {
+public class GDActivity extends CapptainActivity implements ActionBarActivity {
 
     private static final String LOG_TAG = GDActivity.class.getSimpleName();
 

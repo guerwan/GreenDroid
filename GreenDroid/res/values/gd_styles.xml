@@ -118,6 +118,9 @@
     <style name="GreenDroid.SubtextItemView" parent="GreenDroid.SubtitleItemView" />
     <style name="GreenDroid.SubtextItemView.Text" parent="GreenDroid.SubtitleItemView.Text" />
     <style name="GreenDroid.SubtextItemView.Subtext" parent="GreenDroid.SubtitleItemView.Subtitle" />
+  
+    <!-- Styles for the SubtextButtonItemView -->
+    <style name="GreenDroid.ButtonItemView" parent="GreenDroid.SubtitleItemView"></style>
     
     <!-- Styles for the ThumbnailItemView -->
     <style name="GreenDroid.ThumbnailItemView" />
@@ -158,6 +161,7 @@
     <style name="GreenDroid.Widget.ActionBar.Dashboard">
     	<item name="type">dashboard</item>
     </style>
+
     
     <style name="GreenDroid.Widget.ActionBar.Item">
     	<item name="android:layout_width">@dimen/gd_action_bar_height</item>
