@@ -20,7 +20,6 @@ import greendroid.widget.ActionBar;
 import greendroid.widget.ActionBar.OnActionBarListener;
 import greendroid.widget.ActionBarHost;
 import greendroid.widget.ActionBarItem;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -32,13 +31,14 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.cyrilmottier.android.greendroid.R;
+import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
 
 /**
  * An equivalent to a TabActivity that manages fancy tabs and an ActionBar
  * 
  * @author Cyril Mottier
  */
-public class GDTabActivity extends TabActivity implements ActionBarActivity {
+public class GDTabActivity extends CapptainTabActivity implements ActionBarActivity {
 
     private static final String LOG_TAG = GDTabActivity.class.getSimpleName();
 
