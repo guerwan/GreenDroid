@@ -31,11 +31,13 @@ import com.cyrilmottier.android.greendroid.R;
 public class LoaderActionBarItem extends NormalActionBarItem {
 
     private boolean mLoading;
+    private boolean mLoadingOnItemClick;
     private View mButton;
     private View mProgressBar;
 
     public LoaderActionBarItem() {
         mLoading = false;
+        mLoadingOnItemClick = true;
     }
 
     @Override
@@ -53,7 +55,13 @@ public class LoaderActionBarItem extends NormalActionBarItem {
     @Override
     protected void onItemClicked() {
         super.onItemClicked();
-        setLoading(true);
+        if (mLoadingOnItemClick)
+        	setLoading(true);
+    }
+    
+    public void setLoadingOnItemClicked(boolean loading)
+    {
+    	mLoadingOnItemClick = loading;
     }
 
     /**

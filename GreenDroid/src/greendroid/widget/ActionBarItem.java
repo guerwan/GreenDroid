@@ -238,10 +238,12 @@ public abstract class ActionBarItem {
                 break;
                 
             case Download:
-                normalDrawableId = R.drawable.gd_action_bar_download_normal;
-                altDrawableId = R.drawable.gd_action_bar_download_alt;
-                descriptionId = R.string.gd_download;
-                break;
+            	return actionBar
+                .newActionBarItem(LoaderActionBarItem.class)
+                .setDrawable(
+                        createStateListDrawable(actionBar.getContext(),
+                                R.drawable.gd_action_bar_download_normal, R.drawable.gd_action_bar_download_alt))
+                .setContentDescription(R.string.gd_download);
                 
             case Like:
                 normalDrawableId = R.drawable.gd_action_bar_like_normal;
