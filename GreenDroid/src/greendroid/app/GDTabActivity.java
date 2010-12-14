@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TabHost;
+import android.widget.TabHost.TabContentFactory;
 import android.widget.TextView;
 
 import com.cyrilmottier.android.greendroid.R;
@@ -164,7 +165,6 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
     /*
      * GDTabActivity methods
      */
-
     public void addTab(String tag, int labelId, Intent intent) {
         addTab(tag, getString(labelId), intent);
     }
@@ -179,12 +179,27 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
             textIndicator.setText(label);
             indicator = textIndicator;
         }
-
         host.addTab(host.newTabSpec(tag).setIndicator(indicator).setContent(intent));
+    }
+    
+    public void addTab(String tag, int labelId, TabContentFactory factory) {
+        addTab(tag, getString(labelId), factory);
+    }
+    
+    public void addTab(String tag, CharSequence label, TabContentFactory factory) {
+        final TabHost host = getTabHost();
+
+        View indicator = createTabIndicator(label);
+        if (indicator == null) {
+            final TextView textIndicator = (TextView) getLayoutInflater().inflate(R.layout.gd_tab_indicator,
+                    getTabWidget(), false);
+            textIndicator.setText(label);
+            indicator = textIndicator;
+        }
+        host.addTab(host.newTabSpec(tag).setIndicator(indicator).setContent(factory));
     }
 
     protected View createTabIndicator(CharSequence label) {
         return null;
     }
-
 }

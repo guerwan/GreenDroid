@@ -48,7 +48,9 @@ public abstract class ActionBarItem {
         SortBySize, // Some bars
         LocateMyself,        // A surrounded dot
         Download,
-        Like
+        Like,
+        Uninstall,
+        Calendar
     }
 
     // Why, the hell, are those value protected to View ??? The simplest way to
@@ -249,6 +251,16 @@ public abstract class ActionBarItem {
                 normalDrawableId = R.drawable.gd_action_bar_like_normal;
                 altDrawableId = R.drawable.gd_action_bar_like_alt;
                 descriptionId = R.string.gd_rate;
+                break;
+            case Uninstall:
+                normalDrawableId = R.drawable.gd_action_bar_uninstall_normal;
+                altDrawableId = R.drawable.gd_action_bar_uninstall_alt;
+                descriptionId = R.string.gd_uninstall;
+                break;
+            case Calendar:
+                normalDrawableId = R.drawable.gd_action_bar_calendar_normal;
+                altDrawableId = R.drawable.gd_action_bar_calendar_alt;
+                descriptionId = R.string.gd_calendar;
                 break;
 
             default:

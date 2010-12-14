@@ -257,6 +257,11 @@ public class ActionBar extends LinearLayout {
         }
     }
     
+    public int getSize()
+    {
+    	return mItems != null ? mItems.size() : 0;
+    }
+    
     private OnClickListener mClickHandler = new OnClickListener() {
 
         public void onClick(View v) {

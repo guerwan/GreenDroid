@@ -34,6 +34,7 @@ public class ActionBarActivity extends GDActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        
         setActionBarContentView(R.layout.text);
         ((TextView) findViewById(R.id.text)).setText("Screen 1");
 
