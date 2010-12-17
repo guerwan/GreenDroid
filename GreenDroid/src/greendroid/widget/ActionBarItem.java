@@ -50,7 +50,8 @@ public abstract class ActionBarItem {
         Download,
         Like,
         Uninstall,
-        Calendar
+        Calendar,
+        Buy
     }
 
     // Why, the hell, are those value protected to View ??? The simplest way to
@@ -274,7 +275,7 @@ public abstract class ActionBarItem {
                 .setContentDescription(descriptionId);
     }
 
-    private static Drawable createStateListDrawable(Context context, int normalDrawableId, int altDrawableId) {
+    public static Drawable createStateListDrawable(Context context, int normalDrawableId, int altDrawableId) {
 
         StateListDrawable stateListDrawable = new StateListDrawable();
         Drawable normalDrawable = context.getResources().getDrawable(normalDrawableId);

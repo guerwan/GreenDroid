@@ -38,5 +38,6 @@
     <string name="gd_locate_myself">Locate myself</string>
     <string name="gd_uninstall">Uninstall</string>
     <string name="gd_calendar">Agenda</string>
+    <string name="gd_buy">Buy</string>
     
 </resources>
