@@ -51,7 +51,9 @@ public abstract class ActionBarItem {
         Like,
         Uninstall,
         Calendar,
-        Buy
+        Buy,
+        Follow,
+        Unfollow
     }
 
     // Why, the hell, are those value protected to View ??? The simplest way to
@@ -245,7 +247,8 @@ public abstract class ActionBarItem {
                 .newActionBarItem(LoaderActionBarItem.class)
                 .setDrawable(
                         createStateListDrawable(actionBar.getContext(),
-                                R.drawable.gd_action_bar_download_normal, R.drawable.gd_action_bar_download_alt))
+                                R.drawable.gd_action_bar_download_normal, 
+                                R.drawable.gd_action_bar_download_alt))
                 .setContentDescription(R.string.gd_download);
                 
             case Like:
@@ -262,6 +265,16 @@ public abstract class ActionBarItem {
                 normalDrawableId = R.drawable.gd_action_bar_calendar_normal;
                 altDrawableId = R.drawable.gd_action_bar_calendar_alt;
                 descriptionId = R.string.gd_calendar;
+                break;
+            case Follow:
+                normalDrawableId = R.drawable.gd_action_bar_follow_normal;
+                altDrawableId = R.drawable.gd_action_bar_follow_alt;
+                descriptionId = R.string.gd_follow;
+                break;
+            case Unfollow:
+                normalDrawableId = R.drawable.gd_action_bar_unfollow_normal;
+                altDrawableId = R.drawable.gd_action_bar_unfollow_alt;
+                descriptionId = R.string.gd_unfollow;
                 break;
 
             default:

@@ -39,5 +39,7 @@
     <string name="gd_uninstall">Uninstall</string>
     <string name="gd_calendar">Agenda</string>
     <string name="gd_buy">Buy</string>
+    <string name="gd_follow">Follow</string>
+    <string name="gd_unfollow">Unfollow</string>
     
 </resources>

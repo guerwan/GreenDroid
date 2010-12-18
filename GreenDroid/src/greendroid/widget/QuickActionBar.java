@@ -145,7 +145,5 @@ public class QuickActionBar extends QuickActionWidget {
                 dismiss();
             }
         }
-
     };
-
 }
