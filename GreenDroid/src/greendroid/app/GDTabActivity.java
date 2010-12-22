@@ -192,6 +192,7 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
                     "setIndicator", new Class[] { View.class } );
             try {
 				method.invoke(tabSpec, indicator);
+				host.addTab(tabSpec.setContent(intent));
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -201,9 +202,12 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
 			}
         } catch (NoSuchMethodException nsme) {
         	tabSpec.setIndicator(label);
+        	host.addTab(tabSpec.setContent(intent));
+        	((TextView)host.getTabWidget()
+            		.getChildAt(host.getTabWidget().getChildCount() - 1).findViewById(android.R.id.title)).setTextColor(this.getResources().getColorStateList(R.drawable.tab_custom_text_color));
         }
         
-        host.addTab(tabSpec.setContent(intent));
+        
     }
     
     public void addTab(String tag, int labelId, TabContentFactory factory) {
@@ -228,6 +232,7 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
                     "setIndicator", new Class[] { View.class } );
             try {
 				method.invoke(tabSpec, indicator);
+				host.addTab(tabSpec.setContent(factory));
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -237,9 +242,12 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
 			}
         } catch (NoSuchMethodException nsme) {
         	tabSpec.setIndicator(label);
+        	host.addTab(tabSpec.setContent(factory));
+        	((TextView)host.getTabWidget()
+        		.getChildAt(host.getTabWidget().getChildCount() - 1).findViewById(android.R.id.title)).setTextColor(this.getResources().getColorStateList(R.drawable.tab_custom_text_color));
         }
         
-        host.addTab(tabSpec.setContent(factory));
+      
     }
 
     protected View createTabIndicator(CharSequence label) {
