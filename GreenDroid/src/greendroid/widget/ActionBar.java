@@ -17,6 +17,7 @@ package greendroid.widget;
 
 import greendroid.util.Config;
 
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 
 import android.content.Context;
@@ -141,7 +142,13 @@ public class ActionBar extends LinearLayout {
             switch (mType) {
                 case Normal:
                     mHomeButton.setImageDrawable(mHomeDrawable);
-                    mHomeButton.setContentDescription(getContext().getString(R.string.gd_go_home));
+            		try {
+            			// setContentDescription is not available on 1.5 devices
+            			Method setContentDescMethod = View.class.getMethod("setContentDescription", String.class);
+            			setContentDescMethod.invoke(mHomeButton, getContext().getString(R.string.gd_go_home));
+            	    } catch (Exception nsme) {
+            	    }
+                    
                     mTitleView = (TextView) findViewById(R.id.gd_action_bar_title);
                     if (mTitle != null) {
                         setTitle(mTitle);

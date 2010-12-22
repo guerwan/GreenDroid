@@ -15,6 +15,8 @@
  */
 package greendroid.widget;
 
+import java.lang.reflect.Method;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -40,13 +42,24 @@ public class NormalActionBarItem extends ActionBarItem {
         super.prepareItemView();
         final ImageButton imageButton = (ImageButton) mItemView.findViewById(R.id.gd_action_bar_item);
         imageButton.setImageDrawable(mDrawable);
-        imageButton.setContentDescription(mContentDescription);
+        
+		try {
+			// setContentDescription is not available on 1.5 devices
+			Method setContentDescMethod = View.class.getMethod("setContentDescription", String.class);
+			setContentDescMethod.invoke(imageButton, mContentDescription);
+	    } catch (Exception nsme) {
+	    }
     }
 
     @Override
     protected void onContentDescriptionChanged() {
         super.onContentDescriptionChanged();
-        mItemView.findViewById(R.id.gd_action_bar_item).setContentDescription(mContentDescription);
+        try {
+			// setContentDescription is not available on 1.5 devices
+			Method setContentDescMethod = View.class.getMethod("setContentDescription", String.class);
+			setContentDescMethod.invoke( mItemView.findViewById(R.id.gd_action_bar_item), mContentDescription);
+	    } catch (Exception nsme) {
+	    }
     }
 
     @Override

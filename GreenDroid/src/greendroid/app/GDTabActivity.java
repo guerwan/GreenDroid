@@ -20,6 +20,10 @@ import greendroid.widget.ActionBar;
 import greendroid.widget.ActionBar.OnActionBarListener;
 import greendroid.widget.ActionBarHost;
 import greendroid.widget.ActionBarItem;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -29,6 +33,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
+import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.cyrilmottier.android.greendroid.R;
@@ -179,7 +184,26 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
             textIndicator.setText(label);
             indicator = textIndicator;
         }
-        host.addTab(host.newTabSpec(tag).setIndicator(indicator).setContent(intent));
+        
+        TabSpec tabSpec = host.newTabSpec(tag);
+        // Using reflection because setIndicator(View) is only available after 1.5 
+    	try {
+            Method method = TabSpec.class.getMethod(
+                    "setIndicator", new Class[] { View.class } );
+            try {
+				method.invoke(tabSpec, indicator);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+        } catch (NoSuchMethodException nsme) {
+        	tabSpec.setIndicator(label);
+        }
+        
+        host.addTab(tabSpec.setContent(intent));
     }
     
     public void addTab(String tag, int labelId, TabContentFactory factory) {
@@ -196,7 +220,26 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
             textIndicator.setText(label);
             indicator = textIndicator;
         }
-        host.addTab(host.newTabSpec(tag).setIndicator(indicator).setContent(factory));
+        
+        TabSpec tabSpec = host.newTabSpec(tag);
+        // Using reflection because setIndicator(View) is only available after 1.5 
+    	try {
+            Method method = TabSpec.class.getMethod(
+                    "setIndicator", new Class[] { View.class } );
+            try {
+				method.invoke(tabSpec, indicator);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+        } catch (NoSuchMethodException nsme) {
+        	tabSpec.setIndicator(label);
+        }
+        
+        host.addTab(tabSpec.setContent(factory));
     }
 
     protected View createTabIndicator(CharSequence label) {
