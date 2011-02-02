@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
@@ -250,6 +251,46 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
       
     }
 
+
+    public void addImageTab(String tag, int imageDrawable, TabContentFactory factory, int labelId) {
+    	addImageTab(tag, imageDrawable, factory, getString(labelId));
+    }
+    
+    public void addImageTab(String tag, int imageDrawable, TabContentFactory factory, CharSequence label) {
+        final TabHost host = getTabHost();
+
+        View indicator = null;
+        if (indicator == null) {
+            final ImageView imageIndicator = (ImageView) getLayoutInflater().inflate(R.layout.gd_tab_image_indicator,
+                    getTabWidget(), false);
+            indicator = imageIndicator;
+        }
+        
+        ((ImageView)indicator).setImageResource(imageDrawable);
+        TabSpec tabSpec = host.newTabSpec(tag);
+        
+        try {
+            Method method = TabSpec.class.getMethod(
+                    "setIndicator", new Class[] { View.class } );
+            try {
+				method.invoke(tabSpec, indicator);
+				host.addTab(tabSpec.setContent(factory));
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+        } catch (NoSuchMethodException nsme) {
+        	tabSpec.setIndicator(label);
+        	host.addTab(tabSpec.setContent(factory));
+        	((TextView)host.getTabWidget()
+        		.getChildAt(host.getTabWidget().getChildCount() - 1).findViewById(android.R.id.title)).setTextColor(this.getResources().getColorStateList(R.drawable.tab_custom_text_color));
+        }
+    }
+
+    
     protected View createTabIndicator(CharSequence label) {
         return null;
     }
