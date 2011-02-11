@@ -251,6 +251,47 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
       
     }
 
+    
+    public void addImageTab(String tag, int imageDrawable, Intent intent, int labelId) {
+        addImageTab(tag, imageDrawable, intent, getString(labelId));
+    }
+
+    public void addImageTab(String tag, int imageDrawable, Intent intent,CharSequence label) {
+        final TabHost host = getTabHost();
+
+        View indicator = null;
+        if (indicator == null) {
+            final ImageView imageIndicator = (ImageView) getLayoutInflater().inflate(R.layout.gd_tab_image_indicator,
+                    getTabWidget(), false);
+            indicator = imageIndicator;
+        }
+        
+        ((ImageView)indicator).setImageResource(imageDrawable);
+        TabSpec tabSpec = host.newTabSpec(tag);
+        // Using reflection because setIndicator(View) is only available after 1.5 
+    	try {
+            Method method = TabSpec.class.getMethod(
+                    "setIndicator", new Class[] { View.class } );
+            try {
+				method.invoke(tabSpec, indicator);
+				host.addTab(tabSpec.setContent(intent));
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+        } catch (NoSuchMethodException nsme) {
+        	tabSpec.setIndicator(label);
+        	host.addTab(tabSpec.setContent(intent));
+        	((TextView)host.getTabWidget()
+            		.getChildAt(host.getTabWidget().getChildCount() - 1).findViewById(android.R.id.title)).setTextColor(this.getResources().getColorStateList(R.drawable.tab_custom_text_color));
+        }
+        
+        
+    }
+    
 
     public void addImageTab(String tag, int imageDrawable, TabContentFactory factory, int labelId) {
     	addImageTab(tag, imageDrawable, factory, getString(labelId));
