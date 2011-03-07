@@ -54,12 +54,11 @@ public class TextItem extends Item {
     public TextItem(String text) {
         this.text = text;
     }
-    
+
     public TextItem(String text, boolean enabled) {
         this.text = text;
         this.enabled = enabled;
     }
-
     @Override
     public ItemView newView(Context context, ViewGroup parent) {
         return createCellFromXml(context, R.layout.gd_text_item_view, parent);

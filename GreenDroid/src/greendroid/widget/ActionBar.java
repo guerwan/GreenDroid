@@ -15,8 +15,9 @@
  */
 package greendroid.widget;
 
-import greendroid.util.Config;
+import greendroid.graphics.drawable.ActionBarDrawable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
 
@@ -24,7 +25,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -34,19 +34,19 @@ import android.widget.TextView;
 
 import com.cyrilmottier.android.greendroid.R;
 
+
 public class ActionBar extends LinearLayout {
 
-    private static final String LOG_TAG = ActionBar.class.getSimpleName();
-
+    public static final int NONE = 0;
     private static final int MAX_ITEMS_COUNT = 3;
 
     public enum Type {
-        Normal, Dashboard
+        Normal, Dashboard, Empty
     }
-    
+
     public interface OnActionBarListener {
 
-        static final int HOME_ITEM = -1;
+        int HOME_ITEM = -1;
 
         /**
          * Clients may listen to this method in order to be notified the user
@@ -94,10 +94,17 @@ public class ActionBar extends LinearLayout {
         mDividerDrawable = a.getDrawable(R.styleable.ActionBar_dividerDrawable);
         mDividerWidth = a.getDimensionPixelSize(R.styleable.ActionBar_dividerWidth, -1);
         mHomeDrawable = a.getDrawable(R.styleable.ActionBar_homeDrawable);
+        if (mHomeDrawable == null) {
+            mHomeDrawable = new ActionBarDrawable(getResources(), R.drawable.gd_action_bar_home);
+        }
 
         int layoutID;
         int type = a.getInteger(R.styleable.ActionBar_type, -1);
         switch (type) {
+            case 2:
+                mType = Type.Empty;
+                layoutID = R.layout.gd_action_bar_empty;
+                break;
             case 1:
                 mType = Type.Dashboard;
                 layoutID = R.layout.gd_action_bar_dashboard;
@@ -131,35 +138,50 @@ public class ActionBar extends LinearLayout {
 
         if (!mMerging) {
 
-            if (Config.GD_INFO_LOGS_ENABLED) {
-                Log.i(LOG_TAG, "onFinishInflate() - not merging");
-            }
-
-            // Work done for both Dashboard and Normal type
-            mHomeButton = (ImageButton) findViewById(R.id.gd_action_bar_home_item);
-            mHomeButton.setOnClickListener(mClickHandler);
-
             switch (mType) {
+                case Dashboard:
+                    mHomeButton = (ImageButton) findViewById(R.id.gd_action_bar_home_item);
+                    mHomeButton.setOnClickListener(mClickHandler);
+                    break;
+
+                case Empty:
+                    mTitleView = (TextView) findViewById(R.id.gd_action_bar_title);
+                    if (mTitle != null) {
+                        setTitle(mTitle);
+                    }
+                    break;
+
                 case Normal:
+                default:
+                    mHomeButton = (ImageButton) findViewById(R.id.gd_action_bar_home_item);
+                    mHomeButton.setOnClickListener(mClickHandler);
                     mHomeButton.setImageDrawable(mHomeDrawable);
-            		try {
-            			// setContentDescription is not available on 1.5 devices
-            			Method setContentDescMethod = View.class.getMethod("setContentDescription", String.class);
-            			setContentDescMethod.invoke(mHomeButton, getContext().getString(R.string.gd_go_home));
-            	    } catch (Exception nsme) {
-            	    }
+                    
+                    // Using reflection because setContentDescription is only available after 1.5 
+                	try {
+                        Method method = View.class.getMethod(
+                                "setContentDescription", new Class[] { CharSequence.class } );
+                        try {
+            				method.invoke(mHomeButton, getContext().getString(R.string.gd_go_home));
+            			} catch (IllegalArgumentException e) {
+            				e.printStackTrace();
+            			} catch (IllegalAccessException e) {
+            				e.printStackTrace();
+            			} catch (InvocationTargetException e) {
+            				e.printStackTrace();
+            			}
+                    } catch (NoSuchMethodException nsme) {
+                    }
+                    
                     
                     mTitleView = (TextView) findViewById(R.id.gd_action_bar_title);
                     if (mTitle != null) {
                         setTitle(mTitle);
                     }
-                    
-                default:
-                    //Do nothing
                     break;
+
             }
         }
-
     }
 
     public void setOnActionBarListener(OnActionBarListener listener) {
@@ -172,36 +194,59 @@ public class ActionBar extends LinearLayout {
         }
     }
 
-    public void addItem(ActionBarItem.Type actionBarItemType) {
-        addItem(ActionBarItem.createWithType(this, actionBarItemType));
+    public ActionBarItem addItem(ActionBarItem.Type actionBarItemType) {
+        return addItem(ActionBarItem.createWithType(this, actionBarItemType), NONE);
     }
 
-    public void addItem(ActionBarItem item) {
+    public ActionBarItem addItem(ActionBarItem.Type actionBarItemType, int itemId) {
+        return addItem(ActionBarItem.createWithType(this, actionBarItemType), itemId);
+    }
+
+    public ActionBarItem addItem(ActionBarItem item) {
+        return addItem(item, NONE);
+    }
+    
+    public ActionBarItem addItem(ActionBarItem item, boolean withDivider) {
+        return addItem(item, NONE, withDivider);
+    }
+    
+    public ActionBarItem addItem(ActionBarItem item, int itemId) {
+    	return addItem(item, itemId, true);
+    }
+
+    public ActionBarItem addItem(ActionBarItem item, int itemId, boolean withDivider) {
 
         if (mItems.size() >= MAX_ITEMS_COUNT) {
             /*
              * An ActionBar must contain as few items as possible. So let's keep
              * a limit :)
              */
-            return;
+            return null;
         }
 
-        if (mDividerDrawable != null) {
-            ImageView divider = new ImageView(getContext());
-            int dividerWidth = (mDividerWidth > 0) ? mDividerWidth : mDividerDrawable.getIntrinsicWidth();
-            final LinearLayout.LayoutParams lp = new LayoutParams(dividerWidth, LayoutParams.FILL_PARENT);
-            divider.setLayoutParams(lp);
-            divider.setBackgroundDrawable(mDividerDrawable);
-            addView(divider);
+        if (item != null) {
+
+            item.setItemId(itemId);
+
+            if (mDividerDrawable != null && withDivider) {
+                ImageView divider = new ImageView(getContext());
+                int dividerWidth = (mDividerWidth > 0) ? mDividerWidth : mDividerDrawable.getIntrinsicWidth();
+                final LinearLayout.LayoutParams lp = new LayoutParams(dividerWidth, LayoutParams.FILL_PARENT);
+                divider.setLayoutParams(lp);
+                divider.setBackgroundDrawable(mDividerDrawable);
+                addView(divider);
+            }
+
+            final View itemView = item.getItemView();
+            itemView.findViewById(R.id.gd_action_bar_item).setOnClickListener(mClickHandler);
+
+            final int size = (int) getResources().getDimension(R.dimen.gd_action_bar_height);
+            addView(itemView, new LayoutParams(size, LayoutParams.FILL_PARENT));
+
+            mItems.add(item);
         }
 
-        final View itemView = item.getItemView();
-        itemView.findViewById(R.id.gd_action_bar_item).setOnClickListener(mClickHandler);
-
-        final int size = (int) getResources().getDimension(R.dimen.gd_action_bar_height);
-        addView(itemView, new LayoutParams(size, LayoutParams.FILL_PARENT));
-
-        mItems.add(item);
+        return item;
     }
 
     public ActionBarItem getItem(int position) {
@@ -209,6 +254,10 @@ public class ActionBar extends LinearLayout {
             return null;
         }
         return mItems.get(position);
+    }
+
+    public void removeItem(ActionBarItem item) {
+        removeItem(mItems.indexOf(item));
     }
 
     public void removeItem(int position) {
@@ -233,6 +282,9 @@ public class ActionBar extends LinearLayout {
 
             int layoutId = 0;
             switch (type) {
+                case Empty:
+                    layoutId = R.layout.gd_action_bar_empty;
+                    break;
                 case Dashboard:
                     layoutId = R.layout.gd_action_bar_dashboard;
                     break;
@@ -263,7 +315,7 @@ public class ActionBar extends LinearLayout {
             throw new IllegalArgumentException("The given klass must have a default constructor");
         }
     }
-    
+
     public int getSize()
     {
     	return mItems != null ? mItems.size() : 0;

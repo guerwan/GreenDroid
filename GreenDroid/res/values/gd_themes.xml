@@ -44,6 +44,7 @@
         <item name="gdLongTextItemViewStyle">@style/GreenDroid.LongTextItemView</item>
         <item name="gdDescriptionItemViewStyle">@style/GreenDroid.DescriptionItemView</item>
         
+        <item name="gdGalleryItemViewStyle">@style/GreenDroid.GalleryItemView</item>
         <item name="gdSeparatorItemViewStyle">@style/GreenDroid.SeparatorItemView</item>
         
        	<item name="gdProgressItemViewStyle">@style/GreenDroid.ProgressItemView</item>
@@ -69,6 +70,17 @@
         <item name="gdThumbnailItemViewStyleSubtitle">@style/GreenDroid.ThumbnailItemView.Subtitle</item>
         <item name="gdThumbnailItemViewStyleThumbnail">@style/GreenDroid.ThumbnailItemView.Thumbnail</item>
         
+        <item name="gdDownloadedItemViewStyle">@style/GreenDroid.DownloadedItemView</item>
+        <item name="gdDownloadedItemViewStyleText">@style/GreenDroid.DownloadedItemView.Text</item>
+        <item name="gdDownloadedItemViewStyleSubtitle">@style/GreenDroid.DownloadedItemView.Subtitle</item>
+        <item name="gdDownloadedItemViewStyleCheckBox">@style/GreenDroid.DownloadedItemView.CheckBox</item>
+        
+        <item name="gdDownloadedItemViewStyleCheckBoxText">@style/GreenDroid.DownloadedItemView.CheckBoxText</item>
+        
+        
+        <item name="gdThreeLinesItemViewStyle">@style/GreenDroid.ThreeLinesItemView</item>
+        <item name="gdThreeLinesItemViewStyleText">@style/GreenDroid.ThreeLinesItemView.Text</item>
+        
         <item name="gdSegmentTextColor">@android:color/black</item>
         <item name="gdSegmentTextSize">14sp</item>
         <item name="gdSegmentBackground">@drawable/gd_segment_label</item>
@@ -82,7 +94,7 @@
 		<item name="gdActionBarDividerDrawable">@color/gd_action_bar_divider_tint</item>
 		<item name="gdActionBarDividerWidth">1px</item>
 		<item name="gdActionBarApplicationDrawable">@null</item>
-		<item name="gdActionBarHomeDrawable">@drawable/gd_action_bar_home</item>
+		<item name="gdActionBarHomeDrawable">@null</item>
 		
 		<item name="gdActionBarStyle">@style/GreenDroid.Widget.ActionBar</item>
 		<item name="gdActionBarTitleStyle">@style/GreenDroid.Widget.ActionBar.Title</item>
@@ -96,6 +108,7 @@
         <item name="gdQuickActionBarItemStyle">@style/GreenDroid.Widget.QuickAction.Bar.Item</item>
         <item name="gdQuickActionGridStyle">@style/GreenDroid.Widget.QuickAction.Grid</item>
         <item name="gdQuickActionGridItemStyle">@style/GreenDroid.Widget.QuickAction.Grid.Item</item>
+        
     </style>
     
     

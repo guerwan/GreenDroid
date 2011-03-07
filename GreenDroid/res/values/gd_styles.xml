@@ -61,6 +61,11 @@
 		<item name="android:textAppearance">?attr/gdTextAppearanceLarge</item>
 	</style>
     
+    <!-- Styles for the GalleryItemView -->
+	<style name="GreenDroid.GalleryItemView">
+	</style>
+    
+    
     <!-- Styles for the LongTextItemView -->
     <style name="GreenDroid.LongTextItemView">
         <item name="android:textAppearance">?attr/gdTextAppearanceLarge</item>
@@ -118,7 +123,7 @@
     <style name="GreenDroid.SubtextItemView" parent="GreenDroid.SubtitleItemView" />
     <style name="GreenDroid.SubtextItemView.Text" parent="GreenDroid.SubtitleItemView.Text" />
     <style name="GreenDroid.SubtextItemView.Subtext" parent="GreenDroid.SubtitleItemView.Subtitle" />
-  
+    
     <!-- Styles for the SubtextButtonItemView -->
     <style name="GreenDroid.ButtonItemView" parent="GreenDroid.SubtitleItemView"></style>
     
@@ -135,6 +140,33 @@
     <style name="GreenDroid.ThumbnailItemView.Thumbnail">
         <item name="android:layout_width">?attr/gdItemViewPreferredHeight</item>
         <item name="android:layout_marginRight">?attr/gdDrawableMargin</item>
+    </style>
+    
+    <!-- Styles for the DownloadedItemView -->
+    <style name="GreenDroid.DownloadedItemView" />
+    <style name="GreenDroid.DownloadedItemView.Text">
+        <item name="android:layout_height">?attr/gdItemViewPreferredHalfHeight</item>
+        <item name="android:textAppearance">?attr/gdTextAppearanceLarge</item>
+    </style>
+    <style name="GreenDroid.DownloadedItemView.Subtitle">
+        <item name="android:layout_height">?attr/gdItemViewPreferredHalfHeight</item>
+        <item name="android:textAppearance">?attr/gdTextAppearanceSmall</item>
+    </style>
+    <style name="GreenDroid.DownloadedItemView.CheckBox">
+        <item name="android:layout_width">35dip</item>
+        <item name="android:layout_marginRight">?attr/gdDrawableMargin</item>
+    </style>
+     <style name="GreenDroid.DownloadedItemView.CheckBoxText">
+        <item name="android:layout_height">?attr/gdItemViewPreferredHalfHeight</item>
+        <item name="android:textAppearance">?attr/gdTextAppearanceLarge</item>
+    </style>
+    
+    
+    <!-- Styles for the ThreeLinesItemView -->
+    <style name="GreenDroid.ThreeLinesItemView" />
+    <style name="GreenDroid.ThreeLinesItemView.Text">
+        <item name="android:layout_height">?attr/gdItemViewPreferredHalfHeight</item>
+        <item name="android:textAppearance">?attr/gdTextAppearanceLarge</item>
     </style>
     
     
@@ -161,7 +193,10 @@
     <style name="GreenDroid.Widget.ActionBar.Dashboard">
     	<item name="type">dashboard</item>
     </style>
-
+    
+    <style name="GreenDroid.Widget.ActionBar.Empty">
+    	<item name="type">empty</item>
+    </style>
     
     <style name="GreenDroid.Widget.ActionBar.Item">
     	<item name="android:layout_width">@dimen/gd_action_bar_height</item>
@@ -171,6 +206,7 @@
     <style name="GreenDroid.Widget.ActionBar.Title">
         <item name="android:textColor">?attr/gdActionBarTitleColor</item>
     </style>
+    
     <style name="GreenDroid.Widget.QuickAction" />
     <style name="GreenDroid.Widget.QuickAction.Bar" />
     <style name="GreenDroid.Widget.QuickAction.Grid">

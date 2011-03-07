@@ -15,6 +15,7 @@
  */
 package greendroid.app;
 
+import greendroid.graphics.drawable.DockDrawable;
 import greendroid.util.Config;
 import greendroid.widget.ActionBar;
 import greendroid.widget.ActionBar.OnActionBarListener;
@@ -24,6 +25,7 @@ import greendroid.widget.ActionBarItem;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import android.app.TabActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -38,14 +40,13 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.cyrilmottier.android.greendroid.R;
-import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
 
 /**
  * An equivalent to a TabActivity that manages fancy tabs and an ActionBar
  * 
  * @author Cyril Mottier
  */
-public class GDTabActivity extends CapptainTabActivity implements ActionBarActivity {
+public class GDTabActivity extends TabActivity implements ActionBarActivity {
 
     private static final String LOG_TAG = GDTabActivity.class.getSimpleName();
 
@@ -107,6 +108,9 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
                 // Do nothing
             }
         }
+        
+        final int visibility = intent.getIntExtra(ActionBarActivity.GD_ACTION_BAR_VISIBILITY, View.VISIBLE);
+        getActionBar().setVisibility(visibility);
     }
 
     // @Override
@@ -128,12 +132,24 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
         return mActionBarHost.getActionBar();
     }
 
-    public void addActionBarItem(ActionBarItem item) {
-        getActionBar().addItem(item);
+    public ActionBarItem addActionBarItem(ActionBarItem item) {
+        return getActionBar().addItem(item);
+    }
+    
+    public ActionBarItem addActionBarItem(ActionBarItem item, int itemId) {
+        return getActionBar().addItem(item, itemId);
     }
 
-    public void addActionBarItem(ActionBarItem.Type actionBarItemType) {
-        getActionBar().addItem(actionBarItemType);
+    public ActionBarItem addActionBarItem(ActionBarItem.Type actionBarItemType) {
+        return getActionBar().addItem(actionBarItemType);
+    }
+    
+    public void addActionBarItem(ActionBarItem item, boolean withDivider) {
+        getActionBar().addItem(item, withDivider);
+    }
+    
+    public ActionBarItem addActionBarItem(ActionBarItem.Type actionBarItemType, int itemId) {
+        return getActionBar().addItem(actionBarItemType, itemId);
     }
 
     public FrameLayout getContentView() {
@@ -149,7 +165,7 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
             if (position == OnActionBarListener.HOME_ITEM) {
 
                 final Class<?> klass = getGDApplication().getHomeActivityClass();
-                if (klass != null && !klass.equals(getClass())) {
+                if (klass != null && !klass.equals(GDTabActivity.class.getClass())) {
                     if (Config.GD_INFO_LOGS_ENABLED) {
                         Log.i(LOG_TAG, "Going back to the home activity");
                     }
@@ -171,6 +187,7 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
     /*
      * GDTabActivity methods
      */
+
     public void addTab(String tag, int labelId, Intent intent) {
         addTab(tag, getString(labelId), intent);
     }
@@ -185,7 +202,7 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
             textIndicator.setText(label);
             indicator = textIndicator;
         }
-        
+
         TabSpec tabSpec = host.newTabSpec(tag);
         // Using reflection because setIndicator(View) is only available after 1.5 
     	try {
@@ -207,8 +224,6 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
         	((TextView)host.getTabWidget()
             		.getChildAt(host.getTabWidget().getChildCount() - 1).findViewById(android.R.id.title)).setTextColor(this.getResources().getColorStateList(R.drawable.tab_custom_text_color));
         }
-        
-        
     }
     
     public void addTab(String tag, int labelId, TabContentFactory factory) {
@@ -266,7 +281,7 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
             indicator = imageIndicator;
         }
         
-        ((ImageView)indicator).setImageResource(imageDrawable);
+        ((ImageView)indicator).setImageDrawable(new DockDrawable(getResources(), imageDrawable));
         TabSpec tabSpec = host.newTabSpec(tag);
         // Using reflection because setIndicator(View) is only available after 1.5 
     	try {
@@ -307,7 +322,7 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
             indicator = imageIndicator;
         }
         
-        ((ImageView)indicator).setImageResource(imageDrawable);
+        ((ImageView)indicator).setImageDrawable(new DockDrawable(getResources(), imageDrawable));
         TabSpec tabSpec = host.newTabSpec(tag);
         
         try {
@@ -331,8 +346,8 @@ public class GDTabActivity extends CapptainTabActivity implements ActionBarActiv
         }
     }
 
-    
     protected View createTabIndicator(CharSequence label) {
         return null;
     }
+
 }

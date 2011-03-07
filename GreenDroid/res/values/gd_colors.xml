@@ -21,5 +21,8 @@
 
     <color name="gd_action_bar_tint">#a8c24e</color>
     <color name="gd_action_bar_divider_tint">#7fff</color>
+    <color name="gd_action_bar_item_alt">#000000</color>
+    <color name="gd_dock_item_clicked">#00ff00</color>
+    <color name="gd_dock_item_unselected">#888888</color>
     
 </resources>

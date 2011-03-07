@@ -24,10 +24,10 @@
     <string name="gd_talk">Talk</string>
     <string name="gd_compose">Compose</string>
     <string name="gd_download">Download</string>
-    <string name="gd_rate">Rate</string>
     <string name="gd_export">Export</string>
     <string name="gd_share">Share</string>
     <string name="gd_refresh">Refresh</string>
+    <string name="gd_loader">Loading</string>
     <string name="gd_take_photo">Take photo</string>
     <string name="gd_pick_photo">Pick photo</string>
     <string name="gd_locate">Locate</string>
@@ -37,9 +37,6 @@
     <string name="gd_sort_by_size">Sort by size</string>
     <string name="gd_locate_myself">Locate myself</string>
     <string name="gd_uninstall">Uninstall</string>
-    <string name="gd_calendar">Agenda</string>
-    <string name="gd_buy">Buy</string>
-    <string name="gd_follow">Follow</string>
-    <string name="gd_unfollow">Unfollow</string>
+    <string name="gd_updates">Updates</string>
     
 </resources>

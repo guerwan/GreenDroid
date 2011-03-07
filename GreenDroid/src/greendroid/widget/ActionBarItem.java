@@ -15,17 +15,17 @@
  */
 package greendroid.widget;
 
+import greendroid.graphics.drawable.ActionBarDrawable;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
 import android.view.View;
 
 import com.cyrilmottier.android.greendroid.R;
 
 /**
  * Base class representing an {@link ActionBarItem} used in {@link ActionBar}s.
- * The base implementation exposes a single Drawable as well as a
- * content description.
+ * The base implementation exposes a single Drawable as well as a content
+ * description.
  * 
  * @author Cyril Mottier
  */
@@ -40,6 +40,7 @@ public abstract class ActionBarItem {
         Share, // A dot with two arrows
         Refresh, // Two curved arrows
         TakePhoto, // A camera
+        Loader,
         // PickPhoto, // Two pictures with an arrow
         Locate, // The traditional GMaps pin
         Edit, // A pencil
@@ -48,37 +49,18 @@ public abstract class ActionBarItem {
         SortBySize, // Some bars
         LocateMyself,        // A surrounded dot
         Download,
-        Like,
-        Uninstall,
-        Calendar,
-        Buy,
-        Follow,
-        Unfollow
+        Updates
     }
 
-    // Why, the hell, are those value protected to View ??? The simplest way to
-    // get those sets here is to copy them. Another way would be to subclass
-    // View just to access those protected fields ... yuck !!!
-    private static final int[] ENABLE_STATE_SET = {
-        android.R.attr.state_enabled
-    };
-
-    private static final int[] ENABLED_PRESSED_STATE_SET = {
-            android.R.attr.state_enabled, android.R.attr.state_pressed
-    };
-
-    private static final int[] ENABLED_FOCUSED_STATE_SET = {
-            android.R.attr.state_enabled, android.R.attr.state_focused
-    };
-
     protected Drawable mDrawable;
-    protected int mDrawableId;
 
     protected CharSequence mContentDescription;
     protected View mItemView;
 
     protected Context mContext;
     protected ActionBar mActionBar;
+
+    private int mItemId;
 
     void setActionBar(ActionBar actionBar) {
         mContext = actionBar.getContext();
@@ -143,161 +125,121 @@ public abstract class ActionBarItem {
     protected void onItemClicked() {
     }
 
+    void setItemId(int itemId) {
+        mItemId = itemId;
+    }
+
+    public int getItemId() {
+        return mItemId;
+    }
+
     public static ActionBarItem createWithType(ActionBar actionBar, ActionBarItem.Type type) {
 
-        int normalDrawableId;
-        int altDrawableId;
+        int drawableId;
         int descriptionId;
 
         switch (type) {
             case GoHome:
-                normalDrawableId = R.drawable.gd_action_bar_home_normal;
-                altDrawableId = R.drawable.gd_action_bar_home_alt;
+                drawableId = R.drawable.gd_action_bar_home;
                 descriptionId = R.string.gd_go_home;
                 break;
 
             case Search:
-                normalDrawableId = R.drawable.gd_action_bar_search_normal;
-                altDrawableId = R.drawable.gd_action_bar_search_alt;
+                drawableId = R.drawable.gd_action_bar_search;
                 descriptionId = R.string.gd_search;
                 break;
 
             case Talk:
-                normalDrawableId = R.drawable.gd_action_bar_talk_normal;
-                altDrawableId = R.drawable.gd_action_bar_talk_alt;
+                drawableId = R.drawable.gd_action_bar_talk;
                 descriptionId = R.string.gd_talk;
                 break;
 
             case Compose:
-                normalDrawableId = R.drawable.gd_action_bar_compose_normal;
-                altDrawableId = R.drawable.gd_action_bar_compose_alt;
+                drawableId = R.drawable.gd_action_bar_compose;
                 descriptionId = R.string.gd_compose;
                 break;
 
             case Export:
-                normalDrawableId = R.drawable.gd_action_bar_export_normal;
-                altDrawableId = R.drawable.gd_action_bar_export_alt;
+                drawableId = R.drawable.gd_action_bar_export;
                 descriptionId = R.string.gd_export;
                 break;
 
             case Share:
-                normalDrawableId = R.drawable.gd_action_bar_share_normal;
-                altDrawableId = R.drawable.gd_action_bar_share_alt;
+                drawableId = R.drawable.gd_action_bar_share;
                 descriptionId = R.string.gd_share;
                 break;
 
             case Refresh:
-                return actionBar
-                        .newActionBarItem(LoaderActionBarItem.class)
-                        .setDrawable(
-                                createStateListDrawable(actionBar.getContext(),
-                                        R.drawable.gd_action_bar_refresh_normal, R.drawable.gd_action_bar_refresh_alt))
+                return actionBar.newActionBarItem(LoaderActionBarItem.class)
+                        .setDrawable(new ActionBarDrawable(actionBar.getResources(), R.drawable.gd_action_bar_refresh))
+                        .setContentDescription(R.string.gd_refresh);
+                
+            case Loader:
+                return actionBar.newActionBarItem(LoaderActionBarItem.class)
+                        .setDrawable(null)
                         .setContentDescription(R.string.gd_refresh);
 
             case TakePhoto:
-                normalDrawableId = R.drawable.gd_action_bar_take_photo_normal;
-                altDrawableId = R.drawable.gd_action_bar_take_photo_alt;
+                drawableId = R.drawable.gd_action_bar_take_photo;
                 descriptionId = R.string.gd_take_photo;
                 break;
             //
             // case PickPhoto:
-            // normalDrawableId = R.drawable.gd_action_bar_pick_photo_normal;
-            // altDrawableId = R.drawable.gd_action_bar_pick_photo_alt;
+            // drawableId = R.drawable.gd_action_bar_pick_photo;
             // descriptionId = R.string.gd_pick_photo;
             // break;
 
             case Locate:
-                normalDrawableId = R.drawable.gd_action_bar_locate_normal;
-                altDrawableId = R.drawable.gd_action_bar_locate_alt;
+                drawableId = R.drawable.gd_action_bar_locate;
                 descriptionId = R.string.gd_locate;
                 break;
 
             case Edit:
-                normalDrawableId = R.drawable.gd_action_bar_edit_normal;
-                altDrawableId = R.drawable.gd_action_bar_edit_alt;
+                drawableId = R.drawable.gd_action_bar_edit;
                 descriptionId = R.string.gd_edit;
                 break;
 
             case Add:
-                normalDrawableId = R.drawable.gd_action_bar_add_normal;
-                altDrawableId = R.drawable.gd_action_bar_add_alt;
+                drawableId = R.drawable.gd_action_bar_add;
                 descriptionId = R.string.gd_add;
                 break;
 
             case Star:
-                normalDrawableId = R.drawable.gd_action_bar_star_normal;
-                altDrawableId = R.drawable.gd_action_bar_star_alt;
+                drawableId = R.drawable.gd_action_bar_star;
                 descriptionId = R.string.gd_star;
                 break;
 
             case SortBySize:
-                normalDrawableId = R.drawable.gd_action_bar_sort_by_size_normal;
-                altDrawableId = R.drawable.gd_action_bar_sort_by_size_alt;
+                drawableId = R.drawable.gd_action_bar_sort_by_size;
                 descriptionId = R.string.gd_sort_by_size;
                 break;
 
             case LocateMyself:
-                normalDrawableId = R.drawable.gd_action_bar_locate_myself_normal;
-                altDrawableId = R.drawable.gd_action_bar_locate_myself_alt;
+                drawableId = R.drawable.gd_action_bar_locate_myself;
                 descriptionId = R.string.gd_locate_myself;
                 break;
                 
             case Download:
-            	return actionBar
-                .newActionBarItem(LoaderActionBarItem.class)
-                .setDrawable(
-                        createStateListDrawable(actionBar.getContext(),
-                                R.drawable.gd_action_bar_download_normal, 
-                                R.drawable.gd_action_bar_download_alt))
-                .setContentDescription(R.string.gd_download);
-                
-            case Like:
-                normalDrawableId = R.drawable.gd_action_bar_like_normal;
-                altDrawableId = R.drawable.gd_action_bar_like_alt;
-                descriptionId = R.string.gd_rate;
-                break;
-            case Uninstall:
-                normalDrawableId = R.drawable.gd_action_bar_uninstall_normal;
-                altDrawableId = R.drawable.gd_action_bar_uninstall_alt;
-                descriptionId = R.string.gd_uninstall;
-                break;
-            case Calendar:
-                normalDrawableId = R.drawable.gd_action_bar_calendar_normal;
-                altDrawableId = R.drawable.gd_action_bar_calendar_alt;
-                descriptionId = R.string.gd_calendar;
-                break;
-            case Follow:
-                normalDrawableId = R.drawable.gd_action_bar_follow_normal;
-                altDrawableId = R.drawable.gd_action_bar_follow_alt;
-                descriptionId = R.string.gd_follow;
-                break;
-            case Unfollow:
-                normalDrawableId = R.drawable.gd_action_bar_unfollow_normal;
-                altDrawableId = R.drawable.gd_action_bar_unfollow_alt;
-                descriptionId = R.string.gd_unfollow;
-                break;
+            	return actionBar.newActionBarItem(LoaderActionBarItem.class)
+	                .setDrawable(
+	                		new ActionBarDrawable(actionBar.getResources(), 
+	                				R.drawable.gd_action_bar_download))
+	                .setContentDescription(R.string.gd_refresh);
 
+            case Updates:
+            	drawableId = R.drawable.gd_action_bar_download;
+                descriptionId = R.string.gd_updates;
+                break;
+                
             default:
                 // Do nothing but return null
                 return null;
         }
 
-        final Drawable d = createStateListDrawable(actionBar.getContext(), normalDrawableId, altDrawableId);
+        final Drawable d = new ActionBarDrawable(actionBar.getResources(), drawableId);
 
         return actionBar.newActionBarItem(NormalActionBarItem.class).setDrawable(d)
                 .setContentDescription(descriptionId);
     }
 
-    public static Drawable createStateListDrawable(Context context, int normalDrawableId, int altDrawableId) {
-
-        StateListDrawable stateListDrawable = new StateListDrawable();
-        Drawable normalDrawable = context.getResources().getDrawable(normalDrawableId);
-        Drawable altDrawable = context.getResources().getDrawable(altDrawableId);
-
-        stateListDrawable.addState(ENABLED_FOCUSED_STATE_SET, altDrawable);
-        stateListDrawable.addState(ENABLED_PRESSED_STATE_SET, altDrawable);
-        stateListDrawable.addState(ENABLE_STATE_SET, normalDrawable);
-
-        return stateListDrawable;
-    }
 }

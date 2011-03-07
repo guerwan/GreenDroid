@@ -15,6 +15,7 @@
  */
 package greendroid.widget;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import android.view.LayoutInflater;
@@ -43,23 +44,42 @@ public class NormalActionBarItem extends ActionBarItem {
         final ImageButton imageButton = (ImageButton) mItemView.findViewById(R.id.gd_action_bar_item);
         imageButton.setImageDrawable(mDrawable);
         
-		try {
-			// setContentDescription is not available on 1.5 devices
-			Method setContentDescMethod = View.class.getMethod("setContentDescription", String.class);
-			setContentDescMethod.invoke(imageButton, mContentDescription);
-	    } catch (Exception nsme) {
-	    }
+        // Using reflection because setContentDescription is only available after 1.5 
+    	try {
+            Method method = View.class.getMethod(
+                    "setContentDescription", new Class[] { CharSequence.class } );
+            try {
+				method.invoke(imageButton, mContentDescription);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+        } catch (NoSuchMethodException nsme) {
+        }
     }
 
     @Override
     protected void onContentDescriptionChanged() {
         super.onContentDescriptionChanged();
-        try {
-			// setContentDescription is not available on 1.5 devices
-			Method setContentDescMethod = View.class.getMethod("setContentDescription", String.class);
-			setContentDescMethod.invoke( mItemView.findViewById(R.id.gd_action_bar_item), mContentDescription);
-	    } catch (Exception nsme) {
-	    }
+        
+        // Using reflection because setContentDescription is only available after 1.5 
+    	try {
+            Method method = View.class.getMethod(
+                    "setContentDescription", new Class[] { CharSequence.class } );
+            try {
+				method.invoke(mItemView.findViewById(R.id.gd_action_bar_item), mContentDescription);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+        } catch (NoSuchMethodException nsme) {
+        }
     }
 
     @Override

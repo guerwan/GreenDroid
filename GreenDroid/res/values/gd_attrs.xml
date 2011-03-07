@@ -43,6 +43,7 @@
     <attr name="gdLongTextItemViewStyle" format="reference" />
     <attr name="gdDescriptionItemViewStyle" format="reference" />
     
+    <attr name="gdGalleryItemViewStyle" format="reference" />
     <attr name="gdSeparatorItemViewStyle" format="reference" />
     
     <attr name="gdProgressItemViewStyle" format="dimension" />
@@ -56,7 +57,6 @@
     <attr name="gdSubtitleItemViewStyle" format="reference" />
     <attr name="gdSubtitleItemViewStyleText" format="reference" />
     <attr name="gdSubtitleItemViewStyleSubtitle" format="reference" />
-   
     <attr name="gdButtonItemViewStyle" format="reference" />
     
     <attr name="gdSubtextItemViewStyle" format="reference" />
@@ -68,7 +68,15 @@
     <attr name="gdThumbnailItemViewStyleSubtitle" format="reference" />
     <attr name="gdThumbnailItemViewStyleThumbnail" format="reference" />
     
+    <attr name="gdDownloadedItemViewStyle" format="reference" />
+    <attr name="gdDownloadedItemViewStyleText" format="reference" />
+    <attr name="gdDownloadedItemViewStyleSubtitle" format="reference" />
+    <attr name="gdDownloadedItemViewStyleCheckBox" format="reference" />
+    <attr name="gdDownloadedItemViewStyleCheckBoxText" format="reference" />
     
+    <attr name="gdThreeLinesItemViewStyle" format="reference" />
+    <attr name="gdThreeLinesItemViewStyleText" format="reference" />
+        
     <!-- SegmentedBar related attributes -->
     <attr name="gdSegmentTextColor" format="color" />
     <attr name="gdSegmentTextSize" format="dimension" />
@@ -86,7 +94,7 @@
     <attr name="gdActionBarDividerWidth" format="dimension" />
     <attr name="gdActionBarApplicationDrawable" format="reference" /> 
     <attr name="gdActionBarHomeDrawable" format="reference" />
-
+	
     <attr name="gdActionBarStyle" format="reference" />
     <attr name="gdActionBarTitleStyle" format="reference" />
     <attr name="gdActionBarDividerStyle" format="reference" />
@@ -95,13 +103,14 @@
     <attr name="gdTabIndicatorHeight" format="dimension" />
     <attr name="gdTabIndicatorTextAppearance" format="reference" />
     <attr name="gdTabIndicatorBackground" format="reference" />
+    
     <!-- QuickAction related attributes -->
     <attr name="gdQuickActionBarStyle" format="reference" />
     <attr name="gdQuickActionBarItemStyle" format="reference" />
     <attr name="gdQuickActionGridStyle" format="reference" />
     <attr name="gdQuickActionGridItemStyle" format="reference" />
     
-
+    
     <!--            -->
     <!-- Styleables -->
     <!--            -->
@@ -139,6 +148,21 @@
         <attr name="thumbnail" format="reference" />
     </declare-styleable>
     
+    <declare-styleable name="DownloadedItem">
+        <attr name="like" format="reference" />
+        <attr name="dislike" format="reference" />
+        <attr name="likeText" format="string" />
+        <attr name="dislikeText" format="string" />
+    </declare-styleable>
+    
+    <declare-styleable name="ThreeLinesItem">
+        <attr name="oneLeft" format="string" />
+        <attr name="oneRight" format="string" />
+        <attr name="twoLeft" format="string" />
+        <attr name="twoRight" format="string" />
+        <attr name="threeLeft" format="string" />
+        <attr name="threeRight" format="string" />
+    </declare-styleable>
     
     <!-- SegmentedBar related attributes -->
     <declare-styleable name="SegmentedBar">
@@ -158,10 +182,16 @@
         <attr name="type">
             <enum name="normal" value="0" />
             <enum name="dashboard" value="1" />
+            <enum name="empty" value="2" />
         </attr>
         <attr name="dividerDrawable" />
         <attr name="dividerWidth" />
         <attr name="homeDrawable" format="reference" />
+    </declare-styleable>
+    
+	<declare-styleable name="AsyncImageView">
+    	<attr name="defaultSrc" format="reference" />
+        <attr name="url" format="string" />
     </declare-styleable>
 
 </resources>
